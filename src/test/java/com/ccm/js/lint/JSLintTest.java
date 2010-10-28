@@ -1,6 +1,7 @@
 package com.ccm.js.lint;
 
-import java.io.FileReader;
+import java.io.File;
+import java.util.Iterator;
 
 import org.junit.Test;
 
@@ -10,7 +11,9 @@ public class JSLintTest {
 
 	@Test
 	public void runLint() throws Exception{
-		new JSLint().run(new FileReader(ACCOUNTS_CREATE));
+		Iterator<Issue> issues = new JSLint().run(new File(ACCOUNTS_CREATE));
+			Issue next = issues.next();
+			System.out.println(next);
 	}
 
 }

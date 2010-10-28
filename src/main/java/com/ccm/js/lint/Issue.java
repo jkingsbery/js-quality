@@ -15,8 +15,9 @@ public class Issue {
      */
     public static class IssueBuilder {
 
-        /** Build from a JavaScript context */
-        public static Issue fromJavaScript( Scriptable err) {
+        /** Build from a JavaScript context 
+         * @param fileName */
+        public static Issue fromJavaScript( String fileName, Scriptable err) {
             // Correct the line / column numbers so that they're never zero.
             int line = Util.intValue("line", err);
             if (line == 0) {
@@ -26,12 +27,13 @@ public class Issue {
             if (col == 0) {
                 col = 1;
             }
-            return new IssueBuilder(line, col, Util.stringValue("reason", err))
+            return new IssueBuilder(fileName,line, col, Util.stringValue("reason", err))
                     .evidence(Util.stringValue("evidence", err)).raw(Util.stringValue("raw", err))
                     .a(Util.stringValue("a", err)).b(Util.stringValue("b", err))
                     .c(Util.stringValue("c", err)).d(Util.stringValue("d", err)).build();
         }
 
+        private String fileName;
         private String a;
         private String b;
         private String c;
@@ -42,7 +44,8 @@ public class Issue {
         private String raw;
         private final String reason;
 
-        public IssueBuilder(int line, int character, String reason) {
+        public IssueBuilder(String fileName, int line, int character, String reason) {
+        	this.fileName=fileName;
             this.character = character;
             this.line = line;
             this.reason = reason;
@@ -83,6 +86,7 @@ public class Issue {
         }
     }
 
+    private String fileName;
     private final String a;
     private final String b;
     private final String c;
@@ -94,6 +98,7 @@ public class Issue {
     private final String reason;
 
     private Issue(IssueBuilder ib) {
+    	fileName=ib.fileName;
         reason = ib.reason;
         line = ib.line;
         character = ib.character;
@@ -140,6 +145,10 @@ public class Issue {
         return d;
     }
 
+    public String getFileName(){
+    	return fileName;
+    }
+    
     /**
      * @return the contents of the line in which this issue occurs.
      */
@@ -175,6 +184,6 @@ public class Issue {
      */
     @Override
     public String toString() {
-        return  getLine() + ":" + getCharacter() + ":" + getReason();
+        return getFileName()+":"+ getLine() + ":" + getCharacter() + ":" + getReason();
     }
 }
