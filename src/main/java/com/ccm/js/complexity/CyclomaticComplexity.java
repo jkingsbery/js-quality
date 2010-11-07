@@ -2,6 +2,8 @@ package com.ccm.js.complexity;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.mozilla.javascript.CompilerEnvirons;
 import org.mozilla.javascript.ErrorReporter;
@@ -14,13 +16,46 @@ import org.mozilla.javascript.Token;
 
 public class CyclomaticComplexity {
 
+	public static class FunctionTreeNode{
+		ComplexityTally tally=new ComplexityTally(0,0);
+		FunctionTreeNode(){
+		}
+		List<FunctionTreeNode> children=new ArrayList<FunctionTreeNode>();
+		
+		int getTotalDecisions() {
+			int decisions = tally.decisions;
+			for (FunctionTreeNode child : children) {
+				decisions += child.getTotalDecisions();
+			}
+			return decisions;
+
+		}
+
+		int getTotalExits() {
+			int exits = tally.exitPoints;
+			for (FunctionTreeNode child : children) {
+				exits += child.getTotalExits();
+			}
+			return exits;
+		}
+
+		int getComplexity(){
+			int complexity = tally.decisions-tally.exitPoints+2;
+			for(FunctionTreeNode child : children){
+				complexity+=child.getComplexity();
+			}
+			return complexity;
+			
+		}
+	}
+	
 	public static class ComplexityTally{
 		private final int decisions;
 		private final int exitPoints;
 		
 		public ComplexityTally(int decisions, int exitPoints){
 			this.decisions=decisions;
-			this.exitPoints=exitPoints;
+			this.exitPoints = (decisions+1<=exitPoints) ? decisions+1 : exitPoints;
 		}
 		
 		public int getDecisions(){
@@ -52,7 +87,7 @@ public class CyclomaticComplexity {
 		return process(parse).getComplexity();
 	}
 	
-	public ComplexityTally process(Reader script) throws IOException {
+	public FunctionTreeNode process(Reader script) throws IOException {
 
 		CompilerEnvirons compilerEnvirons = new CompilerEnvirons();
 		ErrorReporter errorReporter = new DefaultErrorReporter();
@@ -61,19 +96,24 @@ public class CyclomaticComplexity {
 		return process(parse);
 	}
 
-	public ComplexityTally process(ScriptOrFnNode node) {
-		return process(node, 0).add(new ComplexityTally(0,1));
+	public FunctionTreeNode process(ScriptOrFnNode node) {
+		FunctionTreeNode result = process(node, 0);
+		//FIXME move this into a getter for exitPoints
+		if(result.tally.exitPoints==0){
+			result.tally = result.tally.add(new ComplexityTally(0,1));
+		}
+		return result;
 	}
 
-	public ComplexityTally process(ScriptOrFnNode node, int depth) {
-		ComplexityTally result=new ComplexityTally(0,0);
+	public FunctionTreeNode process(ScriptOrFnNode node, int depth) {
+		FunctionTreeNode result = new FunctionTreeNode();
 		System.out.println("Function count: " + node.getFunctionCount());
 
 		Node child = node.getFirstChild();
 
 		// Handle non-function children.
 		while (child != null) {
-			result=result.add(computeNodeComplexity(child, depth));
+			result.tally=result.tally.add(computeNodeComplexity(child, depth));
 			child = child.getNext();
 		}
 
@@ -82,7 +122,7 @@ public class CyclomaticComplexity {
 			String name = ((FunctionNode) function).getFunctionName();
 			name = name.trim().isEmpty() ? "<anonymous>" : name;
 			System.out.println("Function name: " + name);
-			process(function);
+			result.children.add(process(function));
 		}
 		return result;
 	}
@@ -98,23 +138,20 @@ public class CyclomaticComplexity {
 		}
 		if(isDecisionPoint(next)){
 			return new ComplexityTally(1,0);
-		}else{
+		}else if(isExitPoint(next)){
+			return new ComplexityTally(0,1);
+		} else{
 			return result;
 		}
+	}
+
+	private boolean isExitPoint(Node next) {
+		return next.getType()==TokenType.RETURN.val || next.getType()==TokenType.RETURN_RESULT.val;
 	}
 
 	public boolean isDecisionPoint(Node next) {
 		return next.getType()==TokenType.IFNE.val || next.getType()==Token.IFEQ
 		 || next.getType()==TokenType.HOOK.val;
-	}
-
-	private void printNode(Node next, int depth) {
-		System.out.println(indent(depth) + TokenType.fromVal(next.getType()));
-		Node child = next.getFirstChild();
-		while (child != null) {
-			printNode(child, depth + 1);
-			child = child.getNext();
-		}
 	}
 
 	private String indent(int depth) {
