@@ -20,12 +20,15 @@ public class CyclomaticComplexityTest {
 	@Parameters
     public static Collection<Object[]> data(){
     	return Arrays.asList(new Object[][]{
-    			{"simple1",0,1,1,1},
-    			{"ternary1",1,1,1,2},
+    			{"and1",2,1,1,3},
+    			{"for1",1,1,1,2},
     			{"if1",1,1,1,2},
     			{"if2",2,1,1,3},
-    			{"for1",1,1,1,2},
+    			{"if3",3,1,1,4},
+    			{"or1",2,1,1,3},
     			{"return1",3+0,4+1,2,2},
+    			{"simple1",0,1,1,1},
+    			{"ternary1",1,1,1,2},
     	});
     }
 
