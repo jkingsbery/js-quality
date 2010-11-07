@@ -101,11 +101,11 @@ public class CyclomaticComplexity {
 		}else{
 			return result;
 		}
-//		return result;
 	}
 
 	public boolean isDecisionPoint(Node next) {
-		return next.getType()==TokenType.IFNE.val || next.getType()==Token.IFEQ;
+		return next.getType()==TokenType.IFNE.val || next.getType()==Token.IFEQ
+		 || next.getType()==TokenType.HOOK.val;
 	}
 
 	private void printNode(Node next, int depth) {
