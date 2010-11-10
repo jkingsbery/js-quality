@@ -5381,7 +5381,7 @@ loop:   for (;;) {
             option = {};
         }
         option.indent = option.indent || 4;
-        option.maxerr = option.maxerr || 50;
+        option.maxerr = option.maxerr || 50000;
         adsafe_id = '';
         adsafe_may = false;
         adsafe_went = false;

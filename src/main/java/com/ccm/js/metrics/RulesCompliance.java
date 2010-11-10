@@ -71,7 +71,11 @@ public class RulesCompliance {
 	}
 	
 	public static void main(String args[]) throws IOException{
-		System.out.println(new RulesCompliance().process(new File(args[0])));
+		RulesComplianceResult result = new RulesCompliance().process(new File(args[0]));
+		System.out.println(result.getTotalLinesOfCode());
+		System.out.println(result.getTotalViolations());
+		System.out.println(result.getCompliance());
+		
 	}
 	
 }
