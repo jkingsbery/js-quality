@@ -33,6 +33,8 @@ public class CyclomaticComplexityTest {
     			{"return2",3,2,2,5+1},
     			{"simple1",0,0,1,1},
     			{"ternary1",1,0,1,2},
+    			{"throw1",1,0,1,2},
+    			{"while1",1,0,1,2}
     	});
     }
 
