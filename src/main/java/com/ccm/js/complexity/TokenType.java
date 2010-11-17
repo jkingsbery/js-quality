@@ -135,4 +135,13 @@ public enum TokenType {
 		}
 		return null;
 	}
+
+	public static TokenType getValue(int typeCode) {
+		for(TokenType type : TokenType.values()){
+			if(type.val==typeCode){
+				return type;
+			}
+		}
+		return null;
+	}
 }

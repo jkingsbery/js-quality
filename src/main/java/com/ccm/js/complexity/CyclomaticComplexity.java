@@ -20,14 +20,14 @@ import org.mozilla.javascript.Parser;
 import org.mozilla.javascript.ScriptOrFnNode;
 
 public class CyclomaticComplexity {
-
-	private static final boolean DEBUG_MODE=false;
+	
+	private static final boolean DEBUG_MODE=true;
 	
 	private static final Collection<Integer> DECISION_TYPES = Collections.unmodifiableCollection(Arrays.asList(
 			TokenType.IFNE.val, TokenType.IFEQ.val, TokenType.HOOK.val,TokenType.AND.val,TokenType.OR.val));
 	
 	public static class FunctionTreeNode{
-		ComplexityTally tally=new ComplexityTally(0,0);
+		ComplexityTally tally=new ComplexityTally(0,0,null);
 		FunctionTreeNode(){
 		}
 		List<FunctionTreeNode> children=new ArrayList<FunctionTreeNode>();
@@ -50,7 +50,10 @@ public class CyclomaticComplexity {
 		}
 
 		int getComplexity(){
-			int complexity = tally.decisions-tally.exitPoints+2;
+			int complexity = tally.decisions+tally.exitPoints+1;
+			if(isExitPoint(tally.lastToken)){
+				complexity--;
+			}
 			for(FunctionTreeNode child : children){
 				complexity+=child.getComplexity();
 			}
@@ -70,12 +73,19 @@ public class CyclomaticComplexity {
 	public static class ComplexityTally{
 		private final int decisions;
 		private final int exitPoints;
+
+		/**
+		 * Used to detect whether or not RETURN was the last statement, or effective statement,
+		 * of the function.
+		 */
+		public Node lastToken;
 		
-		public ComplexityTally(int decisions, int exitPoints){
+		public ComplexityTally(int decisions, int exitPoints, Node last){
 			this.decisions=decisions;
 			this.exitPoints = (decisions+1<=exitPoints) ? decisions+1 : exitPoints;
+			this.lastToken=last;
 		}
-		
+
 		public int getDecisions(){
 			return decisions;
 		}
@@ -91,7 +101,7 @@ public class CyclomaticComplexity {
 		public ComplexityTally add(ComplexityTally other) {
 			
 			return new ComplexityTally(this.decisions+other.decisions,
-					this.exitPoints+other.exitPoints);
+					this.exitPoints+other.exitPoints,other.lastToken);
 		}
 	}
 	
@@ -131,12 +141,9 @@ public class CyclomaticComplexity {
 
 	public FunctionTreeNode process(ScriptOrFnNode node) {
 		FunctionTreeNode result = process(node, 0);
-		//FIXME move this into a getter for exitPoints
-		if(result.tally.exitPoints==0){
-			result.tally = result.tally.add(new ComplexityTally(0,1));
-		}
 		return result;
 	}
+
 
 	public FunctionTreeNode process(ScriptOrFnNode node, int depth) {
 		FunctionTreeNode result = new FunctionTreeNode();
@@ -161,7 +168,7 @@ public class CyclomaticComplexity {
 	}
 
 	private ComplexityTally computeNodeComplexity(Node next, int depth) {
-		ComplexityTally result = new ComplexityTally(0,0);
+		ComplexityTally result = new ComplexityTally(0,0,next);
 		
 		if(DEBUG_MODE) System.out.println(indent(depth) + TokenType.fromVal(next.getType()));
 		Node child = next.getFirstChild();
@@ -170,16 +177,16 @@ public class CyclomaticComplexity {
 			child = child.getNext();
 		}
 		if(isDecisionPoint(next)){
-			return result.add(new ComplexityTally(1,0));
+			return result.add(new ComplexityTally(1,0,next));
 		}else if(isExitPoint(next)){
-			return new ComplexityTally(0,1);
+			return new ComplexityTally(0,1,next);
 		} else{
 			return result;
 		}
 	}
 
-	private boolean isExitPoint(Node next) {
-		return next.getType()==TokenType.RETURN.val || next.getType()==TokenType.RETURN_RESULT.val;
+	private static boolean isExitPoint(Node next) {
+		return next!=null && (next.getType()==TokenType.RETURN.val || next.getType()==TokenType.RETURN_RESULT.val);
 	}
 
 	public boolean isDecisionPoint(Node next) {
@@ -225,5 +232,6 @@ public class CyclomaticComplexity {
 		System.out.println("Exit Points: " + node.getTotalExits());
 		System.out.println("Complexity: " + node.getComplexity());
 		System.out.println("Functions: " + node.getFunctionCount());
+		System.out.println("Complextiy/Function: " + ((double)node.getComplexity() / (double) node.getFunctionCount()));
 	}
 }
