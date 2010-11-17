@@ -22,6 +22,7 @@ public class CyclomaticComplexityTest {
     public static Collection<Object[]> data(){
     	return Arrays.asList(new Object[][]{
     			{"and1",2,0,1,3},
+    			{"case1",2,0,1,3},
     			{"catch1",1,0,1,2},
     			{"for1",1,0,1,2},
     			{"if1",1,0,1,2},

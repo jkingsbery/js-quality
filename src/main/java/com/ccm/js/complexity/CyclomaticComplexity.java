@@ -23,8 +23,10 @@ public class CyclomaticComplexity {
 	
 	private static final boolean DEBUG_MODE=true;
 	
-	private static final Collection<Integer> DECISION_TYPES = Collections.unmodifiableCollection(Arrays.asList(
-			TokenType.IFNE.val, TokenType.IFEQ.val, TokenType.HOOK.val,TokenType.AND.val,TokenType.OR.val,TokenType.CATCH_SCOPE.val));
+	private static final Collection<Integer> DECISION_TYPES = Collections
+			.unmodifiableCollection(Arrays.asList(TokenType.IFNE.val,
+					TokenType.IFEQ.val, TokenType.HOOK.val, TokenType.AND.val,
+					TokenType.OR.val, TokenType.CATCH_SCOPE.val,TokenType.CASE.val));
 	
 	public static class FunctionTreeNode{
 		ComplexityTally tally=new ComplexityTally(0,0,null);
