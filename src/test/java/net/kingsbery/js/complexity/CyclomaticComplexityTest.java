@@ -1,4 +1,4 @@
-package com.ccm.js.complexity;
+package net.kingsbery.js.complexity;
 
 import static org.junit.Assert.assertEquals;
 
@@ -16,7 +16,7 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class CyclomaticComplexityTest {
 
-	private static final String TEST_DIR = "src/test/resources/com/ccm/js/complexity";
+	private static final String TEST_DIR = "src/test/resources/net/kingsbery/js/complexity";
 
 	@Parameters
     public static Collection<Object[]> data(){

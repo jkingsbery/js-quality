@@ -1,4 +1,4 @@
-package com.ccm.js;
+package net.kingsbery.js;
 
 import org.apache.commons.lang.math.RandomUtils;
 import org.sonar.api.batch.Sensor;

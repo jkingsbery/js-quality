@@ -1,4 +1,4 @@
-package com.ccm.js.metrics;
+package net.kingsbery.js.metrics;
 
 import java.io.BufferedReader;
 import java.io.File;

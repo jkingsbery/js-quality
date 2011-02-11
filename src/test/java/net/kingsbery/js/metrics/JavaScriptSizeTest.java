@@ -1,4 +1,4 @@
-package com.ccm.js.metrics;
+package net.kingsbery.js.metrics;
 
 import static org.junit.Assert.assertEquals;
 
@@ -15,7 +15,7 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class JavaScriptSizeTest {
 
-	private static final String TEST_DIR = "src/test/resources/com/ccm/js/complexity";
+	private static final String TEST_DIR = "src/test/resources/net/kingsbery/js/complexity";
 
 	@Parameters
 	public static Collection<Object[]> data() {

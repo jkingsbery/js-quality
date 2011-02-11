@@ -1,4 +1,4 @@
-package com.ccm.js.metrics;
+package net.kingsbery.js.metrics;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,9 +6,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.ccm.js.lint.Issue;
-import com.ccm.js.lint.JSLint;
-import com.ccm.js.metrics.JavaScriptSize.JavaScriptSizeResult;
+import net.kingsbery.js.lint.Issue;
+import net.kingsbery.js.lint.JSLint;
+import net.kingsbery.js.metrics.JavaScriptSize.JavaScriptSizeResult;
+
 
 public class RulesCompliance {
 

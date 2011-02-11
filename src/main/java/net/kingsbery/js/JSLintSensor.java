@@ -1,7 +1,10 @@
-package com.ccm.js;
+package net.kingsbery.js;
 
 import java.io.File;
 import java.util.Iterator;
+
+import net.kingsbery.js.lint.Issue;
+import net.kingsbery.js.lint.JSLint;
 
 import org.sonar.api.batch.GeneratesViolations;
 import org.sonar.api.batch.Sensor;
@@ -13,9 +16,6 @@ import org.sonar.api.resources.Resource;
 import org.sonar.api.rules.Rule;
 import org.sonar.api.rules.RulesManager;
 import org.sonar.api.rules.Violation;
-
-import com.ccm.js.lint.Issue;
-import com.ccm.js.lint.JSLint;
 
 public class JSLintSensor implements Sensor, GeneratesViolations {
 	

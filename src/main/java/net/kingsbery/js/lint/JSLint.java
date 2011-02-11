@@ -1,20 +1,19 @@
-package com.ccm.js.lint;
+package net.kingsbery.js.lint;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.Iterator;
 
+import net.kingsbery.js.lint.Issue.IssueBuilder;
+
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Function;
 import org.mozilla.javascript.Scriptable;
-
-import com.ccm.js.lint.Issue.IssueBuilder;
 
 public class JSLint {
 

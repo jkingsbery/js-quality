@@ -1,4 +1,4 @@
-package com.ccm.js;
+package net.kingsbery.js;
 
 import org.sonar.api.measures.Metrics;
 import org.sonar.api.measures.Metric;

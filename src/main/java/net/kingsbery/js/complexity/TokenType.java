@@ -1,4 +1,4 @@
-package com.ccm.js.complexity;
+package net.kingsbery.js.complexity;
 
 public enum TokenType {
 	ERROR(-1), // well-known as the only code < EOF

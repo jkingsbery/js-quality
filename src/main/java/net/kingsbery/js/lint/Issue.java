@@ -1,4 +1,4 @@
-package com.ccm.js.lint;
+package net.kingsbery.js.lint;
 
 
 import org.mozilla.javascript.Scriptable;

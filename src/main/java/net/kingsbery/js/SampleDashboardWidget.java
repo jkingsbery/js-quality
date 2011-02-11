@@ -1,4 +1,4 @@
-package com.ccm.js;
+package net.kingsbery.js;
 
 import org.sonar.api.web.AbstractRubyTemplate;
 import org.sonar.api.web.NavigationSection;

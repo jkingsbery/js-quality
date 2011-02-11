@@ -1,6 +1,5 @@
-package com.ccm.js.lint;
+package net.kingsbery.js.lint;
 
-import java.io.File;
 import java.util.Iterator;
 
 import org.junit.Test;
