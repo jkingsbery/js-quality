@@ -21,17 +21,11 @@
       <version>2.2</version>
     </dependency>
     
-    <!-- add your dependencies here -->
     <dependency>
       <groupId>rhino</groupId>
       <artifactId>js</artifactId>
       <version>1.7R1</version>
     </dependency>
-	<dependency>
-      <groupId>com.sun</groupId>
- 	  <artifactId>js-engine</artifactId>
- 	  <version>1.0</version>
- 	</dependency> 
     <!-- unit tests -->
     <dependency>
     	<groupId>junit</groupId>
@@ -73,10 +67,10 @@
   </build>
   <repositories>
     <repository>
-      <id>lint4j</id>
-      <name>Lint4j</name>
+      <id>jahia</id>
+      <name>Jahia</name>
       <layout>default</layout>
-      <url>http://www.jutils.com/maven/</url>
+      <url>http://maven.jahia.org/maven2</url>
       <snapshots>
         <enabled>false</enabled>
       </snapshots>
