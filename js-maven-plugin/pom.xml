@@ -1,0 +1,23 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>net.kingsbery</groupId>
+  <artifactId>js-maven-plugin</artifactId>
+  <packaging>maven-plugin</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>JSQuality Maven Plugin</name>
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-plugin-api</artifactId>
+      <version>2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>net.kingsbery</groupId>
+      <artifactId>js-quality-core</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+    
+
+    
+  </dependencies>
+</project>

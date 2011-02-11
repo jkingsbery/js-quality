@@ -16,7 +16,8 @@
   </organization>
 
   <modules>
-    <module>core</module>
+    <module>js-quality-core</module>
+    <module>js-maven-plugin</module>
   </modules>
 
 
