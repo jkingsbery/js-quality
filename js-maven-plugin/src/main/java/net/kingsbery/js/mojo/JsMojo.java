@@ -3,8 +3,8 @@ package net.kingsbery.js.mojo;
 import java.io.File;
 import java.io.IOException;
 
+import net.kingsbery.js.Result;
 import net.kingsbery.js.metrics.RulesCompliance;
-import net.kingsbery.js.metrics.RulesCompliance.RulesComplianceResult;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -33,16 +33,16 @@ public class JsMojo extends AbstractMojo
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException
     {
-        RulesComplianceResult result;
-        try {
-            result = new RulesCompliance().process(mainJs);
-            System.out.println(result.getTotalLinesOfCode());
-            System.out.println(result.getTotalViolations());
-            System.out.println(result.getCompliance());
-        } catch (IOException e) {
-            getLog().error(e);
-            throw new MojoFailureException("There was a problem getting JavaScript stats");
-        }
+//        Result result;
+//        try {
+//            result = new RulesCompliance().process(mainJs);
+//            System.out.println(result.getTotalLinesOfCode());
+//            System.out.println(result.getTotalViolations());
+//            System.out.println(result.getCompliance());
+//        } catch (IOException e) {
+//            getLog().error(e);
+//            throw new MojoFailureException("There was a problem getting JavaScript stats");
+//        }
     }
     
     public void setMainCode(File file){

@@ -1,36 +1,39 @@
 package net.kingsbery.js.lint;
 
-import java.util.Iterator;
+import static org.junit.Assert.assertFalse;
+
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
+@RunWith(Parameterized.class)
 public class JSLintTest {
 
     ClassLoader loader = JSLintTest.class.getClassLoader();
 
+    private String file;
+    
+    public JSLintTest(String filename){
+        this.file=filename;
+    }
+    
+    
+    @Parameters
+    public static Collection<Object[]> data() {
+      Object[][] data = new Object[][] { { "jquery.dataTables.js" }, { "jquery.form.js" }};
+      return Arrays.asList(data);
+    }
+
     @Test
     public void runLint() throws Exception {
-        Iterator<Issue> issues = new JSLint().run("jquery.dataTables.js",
-                loader.getResourceAsStream("jquery.dataTables.js"));
-        Issue next = issues.next();
-        System.out.println(next);
+        List<Issue> issues = new JSLint().getList(file,
+                new InputStreamReader(loader.getResourceAsStream(file)));
+        assertFalse(issues.isEmpty());
     }
-
-    @Test
-    public void descriptify() throws Exception {
-        Iterator<Issue> issues = new JSLint().run("descriptify.js",
-                loader.getResourceAsStream("descriptify.js"));
-        Issue next = issues.next();
-        System.out.println(next);
-    }
-
-    @Test
-    public void jqueryForm() throws Exception {
-
-        Iterator<Issue> issues = new JSLint().run("jquery.form.js",
-                loader.getResourceAsStream("jquery.form.js"));
-        Issue next = issues.next();
-        System.out.println(next);
-    }
-
 }

@@ -7,15 +7,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import net.kingsbery.js.lint.Issue.IssueBuilder;
+import net.kingsbery.js.metrics.JavaScriptProcessor;
 
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Function;
 import org.mozilla.javascript.Scriptable;
 
-public class JSLint {
+public class JSLint implements JavaScriptProcessor {
 
 	public static class JsLintException extends RuntimeException {
 
@@ -38,6 +41,16 @@ public class JSLint {
 		return sb.toString();
 	}
 
+	public List<Issue> getList(String fileName, Reader script){
+	    List<Issue> issues = new ArrayList<Issue>();
+        Iterator<Issue> iter = run(fileName,script);
+        while(iter.hasNext()){
+            Issue issue = iter.next();
+            issues.add(issue);
+        }
+        return issues;
+	}
+	
 	public Iterator<Issue> run(String fileName, Reader script) {
 		try {
 			@SuppressWarnings("deprecation")
@@ -62,7 +75,7 @@ public class JSLint {
 					scope.get("JSLINT", scope);
 					Scriptable x = (Scriptable) scope.get("JSLINT", scope);
 					Scriptable errors = (Scriptable) x.get("errors", x);
-					return new IssueIterator(fileName, errors);
+					return new IssueList(fileName, errors);
 				}
 			} finally {
 				Context.exit();
@@ -70,6 +83,15 @@ public class JSLint {
 		} catch (IOException e) {
 			throw new JsLintException(e);
 		}
+	}
+	
+	private List<Issue> getIssueList(String fileName, Scriptable errors){
+	    List<Issue> issues = new ArrayList<Issue>();
+	    Iterator<Issue> iter = new IssueList(fileName,errors);
+	    while(iter.hasNext()){
+	        Issue issue = iter.next();
+	    }
+	    return issues;
 	}
 
 	public Iterator<Issue> run(String fileName, InputStream stream){
@@ -86,14 +108,14 @@ public class JSLint {
 
 	}
 
-	private static final class IssueIterator implements Iterator<Issue> {
+	private static final class IssueList implements Iterator<Issue> {
 
 		private int marker = 0;
 		private Scriptable errors;
 		private Double errorCount;
 		private String fileName;
 
-		public IssueIterator(String fileName, Scriptable errors) {
+		public IssueList(String fileName, Scriptable errors) {
 			this.errors = errors;
 			this.errorCount = (Double) errors.get("length", errors);
 			this.fileName = fileName;
