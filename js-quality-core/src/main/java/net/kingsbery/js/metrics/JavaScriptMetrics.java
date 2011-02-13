@@ -22,6 +22,10 @@ public class JavaScriptMetrics {
         directory = new File(string);
     }
 
+    public JavaScriptMetrics(File mainJs) {
+        directory = mainJs;
+    }
+
     public void addMeasure(JavaScriptProcessor jsLint) {
         // TODO Auto-generated method stub
 

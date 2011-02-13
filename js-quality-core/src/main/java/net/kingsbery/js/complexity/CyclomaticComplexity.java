@@ -139,7 +139,6 @@ public class CyclomaticComplexity implements JavaScriptProcessor {
             }
             return result;
         } else {
-            System.out.println(file);
             return process(new FileReader(file));
         }
     }
@@ -160,8 +159,6 @@ public class CyclomaticComplexity implements JavaScriptProcessor {
 
     public FunctionTreeNode process(ScriptOrFnNode node, int depth) {
         FunctionTreeNode result = new FunctionTreeNode();
-        if (DEBUG_MODE)
-            System.out.println("Function count: " + node.getFunctionCount());
 
         Node child = node.getFirstChild();
 
@@ -176,8 +173,6 @@ public class CyclomaticComplexity implements JavaScriptProcessor {
             FunctionNode function = node.getFunctionNode(i);
             String name = ((FunctionNode) function).getFunctionName();
             name = name.trim().isEmpty() ? "<anonymous>" : name;
-            if (DEBUG_MODE)
-                System.out.println("Function name: " + name);
             result.children.add(process(function));
         }
         return result;
@@ -186,9 +181,6 @@ public class CyclomaticComplexity implements JavaScriptProcessor {
     private ComplexityTally computeNodeComplexity(Node next, int depth) {
         ComplexityTally result = new ComplexityTally(0, 0, next);
 
-        if (DEBUG_MODE)
-            System.out.println(indent(depth)
-                    + TokenType.fromVal(next.getType()));
         Node child = next.getFirstChild();
         while (child != null) {
             result = result.add(computeNodeComplexity(child, depth + 1));

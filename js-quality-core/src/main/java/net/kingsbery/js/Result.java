@@ -58,4 +58,17 @@ public class Result {
             return this.functionTreeNode.getComplexity();
         }
     }
+
+    public long getFunctions() {
+        if(parent){
+
+            int functionCount=0;
+            for (Result child : children) {
+                functionCount += child.getFunctions();
+            }
+            return functionCount;
+        }else{
+            return this.functionTreeNode.getFunctionCount();
+        }
+    }
 }
