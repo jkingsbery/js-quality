@@ -35,7 +35,7 @@ public class JavaScriptPlugin implements Plugin {
 
     // This is where you're going to declare all your Sonar extensions
     public List getExtensions() {
-        return Arrays.asList(JavaScriptLanguage.class, JsLintSensor.class);
+        return Arrays.asList(JavaScriptLanguage.class,JavaScriptSourceImporter.class, JsLintSensor.class);
     }
 
     @Override

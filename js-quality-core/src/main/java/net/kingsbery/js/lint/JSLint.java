@@ -3,6 +3,7 @@ package net.kingsbery.js.lint;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -147,5 +148,13 @@ public class JSLint implements JavaScriptProcessor {
 		}
 
 	}
+
+    public List<Issue> getList(File basedir) {
+        try {
+            return getList(basedir.getPath(),new FileReader(basedir));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }
