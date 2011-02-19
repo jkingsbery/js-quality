@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<rules>
+<!-- Possible Priorities: BLOCKER, CRITICAL, MAJOR, MINOR, INFO -->
+  <rule key="Mixed spaces and tabs." priority="MINOR">
+    <name><![CDATA[Mixed spaces and tabs]]></name>
+    <category name="Maintainability" />
+    <description><![CDATA[Mixed spaces and tabs]]></description>
+  </rule>
+
+  <rule key="'{a}' is not defined." priority="CRITICAL">
+    <name><![CDATA[Variable not defined]]></name>
+    <category name="Maintainability" />
+    <description><![CDATA[Variable not defined]]></description>
+  </rule>
+
+  <rule key="'{a}' used out of scope." priority="BLOCKER">
+    <name><![CDATA[Variable use out of scope]]></name>
+    <category name="Maintainability" />
+    <description><![CDATA[Variable use out of scope]]></description>
+  </rule>
+
+  <rule key="Unexpected space before '{a}'." priority="MINOR">
+    <name><![CDATA[Method length exceeds maximum]]></name>
+    <category name="Maintainability" />
+    <description><![CDATA[Method length exceeds maximum]]></description>
+  </rule>
+</rules>

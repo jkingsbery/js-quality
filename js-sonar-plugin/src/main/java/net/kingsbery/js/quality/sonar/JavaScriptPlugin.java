@@ -1,8 +1,10 @@
 package net.kingsbery.js.quality.sonar;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
+import net.kingsbery.js.quality.sonar.lint.JsLintProfileDefinition;
+import net.kingsbery.js.quality.sonar.lint.JsLintRuleRepository;
 import net.kingsbery.js.quality.sonar.lint.JsLintSensor;
 
 import org.sonar.api.Plugin;
@@ -33,9 +35,16 @@ public class JavaScriptPlugin implements Plugin {
         return "You shouldn't expect too much from this plugin except displaying the Hello World message.";
     }
 
-    // This is where you're going to declare all your Sonar extensions
-    public List getExtensions() {
-        return Arrays.asList(JavaScriptLanguage.class,JavaScriptSourceImporter.class, JsLintSensor.class);
+    public List<?> getExtensions() {
+        List<Class<?>> extensions = new ArrayList<Class<?>>();
+        extensions.add(JavaScriptLanguage.class);
+        extensions.add(JavaScriptSourceImporter.class);
+        
+        
+        extensions.add(JsLintSensor.class);
+        extensions.add(JsLintRuleRepository.class);
+        extensions.add(JsLintProfileDefinition.class);
+        return extensions;
     }
 
     @Override

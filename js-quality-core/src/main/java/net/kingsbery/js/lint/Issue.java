@@ -184,6 +184,11 @@ public class Issue {
      */
     @Override
     public String toString() {
-        return getFileName()+":"+ getLine() + ":" + getCharacter() + ":" + getReason();
+        return getFileName()+":"+ getLine() + ":" + getCharacter() + ":" + getRaw();
     }
+
+    public String getRuleKey() {
+        return raw;
+    }
+
 }

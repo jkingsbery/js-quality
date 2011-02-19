@@ -21,24 +21,14 @@ public class JavaScriptSourceImporter extends AbstractSourceImporter {
         ProjectFileSystem fileSystem = project.getFileSystem();
 
         List<File> sourceDirs = fileSystem.getSourceDirs();
-        System.out.println("Using " + sourceDirs + " as the source directories");
         List<File> sourceFiles = fileSystem.getSourceFiles(language);
         parseDirs(context, sourceFiles, sourceDirs, false,
                 fileSystem.getSourceCharset());
 
         List<File> testDirs = fileSystem.getTestDirs();
-        System.out.println("Using " + testDirs + " as the test directories");
         List<File> testFiles = fileSystem.getTestFiles(language);
         parseDirs(context, testFiles, testDirs, true,
                 fileSystem.getSourceCharset());
-
-        for (File directory : sourceDirs) {
-            System.out.println(directory.getName());
-        }
-        for (File directory : testDirs) {
-            System.out.println(directory.getName());
-        }
-
     }
 
 }

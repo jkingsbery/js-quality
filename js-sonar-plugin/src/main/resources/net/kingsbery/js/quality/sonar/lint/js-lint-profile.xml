@@ -1,0 +1,22 @@
+<profile>
+  <name>JsLint Rules</name>
+  <language>js</language>
+  <rules>
+    <rule>
+      <repositoryKey>jslint_rules</repositoryKey>
+      <key><![CDATA[Mixed spaces and tabs.]]></key>
+    </rule>
+    <rule>
+      <repositoryKey>phppmd_rules</repositoryKey>
+      <key><![CDATA['{a}' is not defined.]]></key>
+    </rule>
+    <rule>
+      <repositoryKey>phppmd_rules</repositoryKey>
+      <key><![CDATA['{a}' used out of scope.]]></key>
+    </rule>
+    <rule>
+      <repositoryKey>phppmd_rules</repositoryKey>
+      <key><![CDATA[Unexpected space before '{a}'.]]></key>
+    </rule>
+  </rules>
+</profile>

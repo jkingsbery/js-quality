@@ -7,10 +7,10 @@ import net.kingsbery.js.lint.Issue;
 import net.kingsbery.js.lint.JSLint;
 import net.kingsbery.js.quality.sonar.JavaScriptLanguage;
 
-import org.sonar.api.resources.File;
 import org.sonar.api.batch.Sensor;
 import org.sonar.api.batch.SensorContext;
 import org.sonar.api.profiles.RulesProfile;
+import org.sonar.api.resources.File;
 import org.sonar.api.resources.Project;
 import org.sonar.api.resources.Resource;
 import org.sonar.api.rules.Rule;
@@ -32,7 +32,6 @@ public class JsLintSensor implements Sensor {
         this.ruleFinder = ruleFinder;
         this.profile = profile;
       }
-
     
     public void analyse(Project project, SensorContext context) {
         JSLint lint = new JSLint();
@@ -40,11 +39,11 @@ public class JsLintSensor implements Sensor {
         
         List<Violation> contextViolations = new ArrayList<Violation>();
         for (Issue issue : issues) {
-            Rule rule = null;
-//            Rule rule = ruleFinder.findByKey(
-//                    PhpmdRuleRepository.PHPMD_REPOSITORY_KEY,
-//                    issue.getRuleKey());
-            if (true) {//rule != null) {
+            System.out.println(issue);
+            Rule rule = ruleFinder.findByKey(
+                    JsLintRuleRepository.JSLINT_RULES_KEY,
+                    issue.getRuleKey());
+            if (rule != null) {
                 Resource resource = context.getResource(new File(JavaScriptLanguage.INSTANCE,issue.getFileName()));
                 if (context.getResource(resource) != null) {
                     Violation v = Violation.create(rule, resource)
@@ -55,7 +54,6 @@ public class JsLintSensor implements Sensor {
             }
         }
         context.saveViolations(contextViolations);
-
     }
 
 }

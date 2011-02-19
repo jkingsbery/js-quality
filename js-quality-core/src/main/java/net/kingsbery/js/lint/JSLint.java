@@ -157,4 +157,11 @@ public class JSLint implements JavaScriptProcessor {
         }
     }
 
+    
+    public static void main(String args[]){
+        List<Issue> issues = new JSLint().getList(new File(args[0]));
+        for(Issue issue : issues){
+            System.out.println(issue);
+        }
+    }
 }
